@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DAISY</title>
+    <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.3.0.css">
+    <script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="LocalNotification.js"></script>
+    <script type="text/javascript" charset="utf-8" src="webintent.js"></script>
+    <script type="text/javascript" src="calendar.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.3.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    /*     json = {"exam":"CT abdomen","id":"000000001",date":[2013,3,15,13,30],"tasks":[
+        {
+            "task":"NPO after ",
+            "date":1,
+            "hr":23,
+            "min":59,
+            "fix":true 
+        },
+        {
+            "task":"Drink oral contrast at",
+            "date":0,
+            "hr":2,
+            "min":0,
+            "fix":false 
+        },
+        {
+            "task":"Check in at",
+            "date":0,
+            "hr":1,
+            "min":0,
+            "fix":false 
+        }
+  ]
+};*/
+
+    // Wait for Cordova to load
+    //
+
+storage = window.localStorage;
+
+function init() {
+    document.addEventListener("deviceready", onDeviceReady, false);
+}
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        // Empty
+
+
+        console.log("Device Ready");
+
+        if(window.location.href.indexOf("json") != -1)
+        {
+
+                        document.getElementById("test").innerHTML=window.location.search;
+
+
+
+
+        }
+
+        else{
+
+                        document.getElementById("test").innerHTML="nothing_passed_in!";
+
+        }
+
+
+        var da1 = new Date(2013, 4, 11, 23, 59, 0, 0);
+        var da2 = new Date(2013, 4, 12, 9, 0, 0, 0);
+        var da3 = new Date(2013, 4, 12, 10, 0, 0, 0); 
+
+
+        plugins.localNotification.add({ date: da1, message: 'NPO 1/3', id: 201 });
+        plugins.localNotification.add({ date: da2, message: 'Drink oral contrast 2/3', id: 202 });
+        plugins.localNotification.add({ date: da3, message: 'Check in 3/3', id: 203 });
+    }
+
+    // alert dialog dismissed
+    function alertDismissed() {
+        // do something
+    }
+
+    function title()
+    {
+    //document.getElementById("title").innerHTML=json.exam;
+    }
+    
+    function checklist(){
+    
+    }
+
+    // Show a custom alertDismissed
+    //
+    function showAlert() {
+        navigator.notification.alert(
+            'You are the winner!',  // message
+            alertDismissed,         // callback
+            'Game Over',            // title
+            'Done'                  // buttonName
+        );
+    }
+
+    function localN(){
+
+    var d1 = new Date();
+
+    var min = d1.getMinutes();
+
+    var d2 = new Date();
+
+    d2.setMinutes(min+1)
+
+    var d3 = new Date();
+
+    d3.setMinutes(min+2)
+
+   /* var d1 = new Date();
+    var t2 = d1.getTime() + 30*1000;
+    var t3 = d1.getTime() + 60*1000;
+     //60 seconds from now 
+    var d2 = new Date(t2);
+    var d3 = new Date(t3);*/
+
+    plugins.localNotification.add({ date: d1, message: 'NPO 1/3 (CT abdomen 5/4 11:00AM)', id: 101 });
+    plugins.localNotification.add({ date: d2, message: 'Drink oral contrast 2/3 (CT abdomen 5/4 11:00AM)', id: 102 });
+    plugins.localNotification.add({ date: d3, message: 'Check in 3/3 (CT abdomen 5/4 11:00AM)', id: 103 });
+}
+
+
+    $(document).ready(function() {
+    $('#btnSave').click(function() {
+        addCheckbox($('#txtName').val());
+    });
+});
+
+function addCheckbox(name) {
+   var container = $('#cblist');
+   var inputs = container.find('input');
+   var id = inputs.length+1;
+
+   $('<input />', { type: 'checkbox', id: 'cb'+id, value: name }).appendTo(container);
+   $('<label />', { 'for': 'cb'+id, text: name }).appendTo(container);
+}
+
+
+
+
+    function addtoCalendar(){
+        var startDate = new Date("2013-04-12 10:00 AM")
+        var endDate = new Date("2013-04-12 12:00 AM")
+        var title = "CT";
+        var location = "Weill Cornell";
+        var notes = "Make sure you check in an hr before!";
+        var success = function() { };
+        var error = function(message) { };
+        window.plugins.calendarPlugin.createEvent(title,location,notes,startDate,endDate, success, error);  
+
+
+    }
+
+    function cancelNotification(){
+        plugins.localNotification.cancelAll();
+    }
+
+
+
+    </script>
+
+
+
+
+
+  </head>
+    <body onload="init()">
+
+    <div data-role="page" id ="Reminders">
+
+    <div data-role="header" role = heading data-theme = "a" >
+            
+                    <h1>DAISY</h1>
+
+    </div><!-- /header -->
+    
+    <div data-role="content">
+        <!--CT abdomen 2013-04-12 11:00AM  
+        <p>View internal page called <a href="#page2">bar</a></p>
+        <a id="button" data-role="button" data-mini="true" data-inline="true" onclick="addtoCalendar();">Add to Calendar</a>-->
+
+    <div id = "checklist">
+    
+    <ul data-role="listview" data-inset="true" data-divider-theme="a">
+   
+
+    <li data-role="list-divider" data-theme = "e" ><h1>CT abdomen 10/4 11:00AM  
+        <!--<p>View internal page called <a href="#page2">bar</a></p>-->
+       <!-- <a id="button" data-role="button"  data-inline="true" onclick="addtoCalendar();">Add to Calendar</a>-->
+       <!--<a id="button" data-role="button"  style="float:right" data-inline="true" data-mini="true" data-theme= "a"  data-icon="plus"onclick="addtoCalendar()">Cal</a>-->
+   </li>
+    <li data-role="list-divider">10/3/2013</li>
+        <li><form>
+        <label>
+        <input type="checkbox" name="checkbox-0 ">NPO after 11:59PM
+        </label>
+    </form></li>
+    <li data-role="list-divider">10/4/2013</li>
+    <li><form>
+        <label>
+        <input type="checkbox" name="checkbox-1 ">Drink oral contrast at 9:00AM
+
+        </label>
+    </form></li>
+    <li><form>
+        <label>
+        <input type="checkbox" name="checkbox-0 ">Check in at 10:00AM
+        </label>
+    </form></li>
+    </ul>
+    
+
+
+
+   <ul data-role="listview" data-inset="true" data-divider-theme="a">
+   
+
+    <li data-role="list-divider" data-theme = "e" ><h1>Ultrasound abdomen 10/5 11:00AM   
+        <!--<p>View internal page called <a href="#page2">bar</a></p>-->
+       <!-- <a id="button" data-role="button"  data-inline="true" onclick="addtoCalendar();">Add to Calendar</a>-->
+              <!--<a id="button" data-role="button"  style="float:right" data-inline="true" data-mini="true" data-theme= "a"  data-icon="plus"onclick="addtoCalendar()">Cal</a>-->
+
+    </li>
+    <li data-role="list-divider">10/5/2013</li>
+    <li><form>
+        <label>
+        <input type="checkbox" name="checkbox-1 ">NPO after 7:00AM
+        </label>
+    </form></li>
+    <li><form>
+        <label>
+        <input type="checkbox" name="checkbox-0 ">Check in at 10:00AM
+        </label>
+    </form></li>
+    </ul>
+    </div><!--checklist-->
+
+
+</div>
+
+
+
+        <div data-role="footer" data-theme = "a" data-position="fixed">
+        <div data-role="controlgroup"  data-type="horizontal" data-transition="flip">
+        <a href="#Reminders" data-role="button" data-transition="flip">Reminders</a>
+        <a href="#Exams" data-role="button" data-transition="flip">Exams</a>
+        <a href="#Contact" data-role="button" data-transition="flip">Contact</a>
+        <a href="#Reward" data-role="button" data-transition="flip">Reward</a>
+        <a href="#More" data-role="button" data-transition="flip">More</a>
+    </div>
+    </div><!--footer -->
+    
+
+</div><!-- /page -->
+    
+
+<div data-role="page" id ="Exams">
+
+    <div data-role="header" data-theme = "a" >
+        <h1>DAISY</h1>
+        
+    </div><!-- /header -->
+    
+    <div data-role="content">
+
+        <h1>Exams</h1>
+        
+    <ul data-role="listview" data-filter="true" data-filter-placeholder="Search exams..." data-inset="true">
+        <li><a href="#">CT without contrast</a></li>
+        <li><a href="#">CT with oral and IV contrast</a></li>
+        <li><a href="#">CT Abd pelv IV only protocol.doc</a></li>
+        <li><a href="#ultrasound">Ultrasound</a></li>
+    </ul>
+        <!--<p>View internal page called <a href="#page2">bar</a></p>-->
+    </div><!-- /content -->
+    
+
+    
+       <div data-role="footer" data-theme = "a" data-position="fixed">
+        <div data-role="controlgroup" data-type="horizontal" data-transition="flip">
+        <a href="#Reminders" data-role="button" data-transition="flip">Reminders</a>
+        <a href="#Exams" data-role="button" data-transition="flip">Exams</a>
+        <a href="#Contact" data-role="button" data-transition="flip">Contact</a>
+        <a href="#Reward" data-role="button" data-transition="flip">Reward</a>
+        <a href="#More" data-role="button" data-transition="flip">More</a>
+    </div>
+    </div><!--footer -->
+    
+
+</div><!-- /page -->
+
+
+<div data-role="page" id ="More">
+
+    <div data-role="header" data-theme = "a" >
+        <h1>DAISY</h1>
+        
+    </div><!-- /header -->
+    
+    <div data-role="content">
+
+
+    <h1>Test1</h1>
+    
+    <p><a href="#" onclick="localN()">Add Notification Test</a></p>
+    
+    <!--<h1>Test2</h1>
+ 
+     <p><a href="#" onclick="cancelNotification()">Cancel Notification Test</a></p>-->
+    
+    <h1>Test2</h1>
+    <div id="test"></div>
+
+        
+
+
+
+        <!--<p>View internal page called <a href="#page2">bar</a></p>-->
+    </div><!-- /content -->
+    
+
+    
+        <div data-role="footer" data-theme = "a" data-position="fixed">
+        <div data-role="controlgroup" data-type="horizontal" data-transition="flip">
+        <a href="#Reminders" data-role="button" data-transition="flip">Reminders</a>
+        <a href="#Exams" data-role="button" data-transition="flip">Exams</a>
+        <a href="#Contact" data-role="button" data-transition="flip">Contact</a>
+        <a href="#Reward" data-role="button" data-transition="flip">Reward</a>
+        <a href="#More" data-role="button" data-transition="flip">More</a>
+    </div>
+    </div><!--footer -->
+    
+
+</div><!-- /page -->
+
+
+<div data-role="page" id ="ultrasound">
+
+    <div data-role="header" data-theme = "a" data-position="fixed" >
+        <a href="index.html" data-rel="back">back</a>
+        <h1>DAISY</h1>
+        
+    </div><!-- /header -->
+    
+    <div data-role="content">
+        <p>Weill Cornell Imaging at New York - Presbyterian provides ultrasound exams at our convenient 1305 York Avenue, 525 East 70<sup>th</sup> Street, 425 East 61<sup>st</sup> Street, and 2315 Broadway sites. At each site, our staff is focused on making your imaging experience as comfortable as possible while performing the safest, most appropriate, and highest quality study. Every imaging study is reviewed by one of the faculty radiologists of Weill Cornell Medical College with specialist expertise in ultrasound of the body region being scanned. </p>
+
+        <p>All our ultrasound facilities are accredited by the American College of Radiology.</p>
+
+        <p>Your comfort and safety is important to us. We are looking to provide the best service to you by our team of highly trained and registered technologists, specialized in the area of your scan. </p>
+
+        <a name="u1"><p><b>What is Ultrasound Imaging? </b></p></a>
+
+        <p>Ultrasound imaging, also called sonography, uses high frequency sound waves to obtain images of your body.Ultrasound imaging is based on the same principles involved in the sonar used by bats, ships and fisherman. When a sound wave strikes an object, it bounces backward, or echoes. By measuring these echo waves it is possible to determine how far away the object is and its size, shape, consistency (whether the object is solid, filled with fluid, or both) and uniformity.</p>
+
+        <a name="u2"><p><b>Does ultrasound involve radiation?</b></p></a>
+
+        <p>No, ultrasound examinationsis safe donot use ionizing radiation (x-rays). </p>
+
+        <p>Ultrasound is very safe and there are no known harmful effects on humans. </p>
+
+        <a name="u3">
+
+        <p><b>How should I prepare for my Ultrasound exam?</b></p></a>
+
+        <p>Your doctor has ordered a CT scan because he/she requires information in order to guide your care. Your doctor鈥檚 office will provide Weill Cornell Imaging at NewYork Presbyterian with a prescription or request for the CT scan. If you have been given a copy of the prescription or order form, make sure to bring with you to your examination.</p>
+
+        <p>You should wear comfortable cloth, loose 鈥揻itted. You may need to remove all clothing and jewelry in the area to be examined. In some cases, you may be asked to change into a gown for the exam. </p>
+
+        <p>Other preparation depends on the type of exam you will have. For some scans, you may be instructed to not eat for 6-8 hours or to drink up to 4-6 glasses of water prior the exam and to avoid urinating so that your bladder is full when your scan begins.</p>
+
+        <a name="u4">
+
+        <p><b>What happens when I arrive for my exam?</b></p></a>
+
+        <p>You should arrive 15 min before your scheduled appointment to fill out registration forms and questionnaires. For your convenience, these forms may be printed or completed prior your arrival. These forms are available at:</p>
+
+        <p>You can request a copy of your images that will be loaded on a CD which can be either mailed to you or ready when your exam is completed. This is free of charge to you.</p>
+
+        <p>After you registration is completed, our professional and friendly technologist will accompany you to the exam room.</p>
+
+        <a name="u5">
+
+        <p><b>What happens during my Ultrasound exam?</b></p></a>
+
+        <p>Your exam will performed by a professional and highly experienced trained ultrasound technologist registered in the ultrasound specialty of your exam. Your specific examination will be explained in detail to you by the technologist prior to starting. He/she will also ask you questions that may assist the radiologist in the interpretation of yourimages. </p>
+
+        <p>Our technologist will the place a water-soluble warm gel over the area of the body that we will imageto allow the sound waves to pass into your body.</p>
+
+        <p>If Doppler ultrasound study is performed, you may actually hear pulse- like sounds that change in pith as the blood flow is monitored and measured.</p>
+
+        <p>Once the imaging is complete, the gel will be wiped off your skin.</p>
+
+        <p>Most exams are completed within 30 minutes.</p>
+
+        <p>After the ultrasound examination, you should be able to resume your normal activities immediately.</p>
+
+        <a name="u6">
+        <p><b>Who interprets the results and how do I get them?</b></p></a>
+
+        <p>All scans are reviewed and analyzed right by Weill Cornell Radiologist trained in ultrasound imaging and dedicated to the specific area of interest of your study. A signed report will be send promptly to your physician who will discuss the result with you.</p>
+
+        <a name="u7">
+
+        <p><b>What should I do beforeI leave?</b></p></a>
+
+        <p>Once your examination is over, the technologist will accompany you to our check out desk. At this time, you can share you experience with us. Any co-pay that is necessary will be collected. </p>
+
+        <p>If you have any questions, please let our staff know. It is important to us that all your questions are answered and your visit to our facility was a very good experience. </p>
+
+        <p>Thank you for using Weill Cornell Imaging at New York-Presbyterian where you</p>
+
+
+        <!--<p>View internal page called <a href="#page2">bar</a></p>-->
+    </div><!-- /content -->
+    
+
+    
+        <div data-role="footer" data-theme = "a" data-position="fixed">
+        <div data-role="controlgroup" data-type="horizontal" data-transition="flip">
+        <a href="#Reminders" data-role="button" data-transition="flip">Reminders</a>
+        <a href="#Exams" data-role="button" data-transition="flip">Exams</a>
+        <a href="#Contact" data-role="button" data-transition="flip">Contact</a>
+        <a href="#Reward" data-role="button" data-transition="flip">Reward</a>
+        <a href="#More" data-role="button" data-transition="flip">More</a>
+    </div>
+    </div><!--footer -->
+    
+
+</div><!-- /page -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+  </body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>My Page</title> 
+	<!--meta name="viewport" content="width=device-width, initial-scale=1"--> 
+	<!--<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css" />-->
+	<!--script src="http://code.jquery.com/jquery-1.8.2.min.js"></script-->
+	<!--script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script-->
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />	
+	<link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.3.0.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.3.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="LocalNotification.js"></script>
+	<script type="text/javascript" src="cordova-2.5.0.js"></script>
+	<script type="text/javascript">
+	
+
+		 document.addEventListener("deviceready", onDeviceReady, false);
+
+
+
+         function Notifi() {
+                	plugins.localNotification.add({ date: new Date(), message: 'This is an Android alarm using the statusbar', id: 123 });
+                	navigator.notification.alert(
+            'You are the winner!',  // message
+            alertDismissed,         // callback
+            'Game Over',            // title
+            'Done'                  // buttonName
+        );
+        }
+
+
+
+
+	var today = new Date();
+
+
+
+
+
+	
+	
+	json = { "exam":"CT abdomen","date":[2013,3,15,13,30],"tasks":[
+        {
+            "task":"NPO after midnight",
+            "date":1,
+            "hr":23,
+            "min":59,
+            "fix":true 
+        },
+        {
+            "task":"Drink oral contrast",
+            "date":0,
+            "hr":2,
+            "min":0,
+            "fix":false 
+        },
+        {
+            "task":"Check in",
+            "date":0,
+            "hr":1,
+            "min":0,
+            "fix":false 
+        }
+  ]
+};	
+	//var obj = JSON.parse(json);
+	
+	function title()
+	{
+	document.getElementById("title").innerHTML=json.exam;
+	}
+	
+	function checklist(){
+	
+	}
+	
+	</script>
+	
+</head> 
+<body> 
+
+
+<div data-role="page" id ="Reminders">
+
+	<div data-role="header" role = heading data-theme = "b" >
+		<h1>Exam Prep</h1>
+		
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h1><p id="title"></p></h1>
+		<!--<p>View internal page called <a href="#page2">bar</a></p>-->
+	<div id = "checklist">
+	
+	
+	
+	
+	
+	
+	<button onclick="Notifi()">Click me</button>
+	
+	
+	<ul data-role="listview" data-inset="true" data-divider-theme="d">
+	<li data-role="list-divider">3/14/2013</li>
+	<li><form>
+		<label>
+        <input type="checkbox" name="checkbox-0 ">NPO after 12:00AM
+		</label>
+	</form></li>
+	</ul>
+	<ul data-role="listview" data-inset="true" data-divider-theme="d">
+	<li data-role="list-divider">3/15/2013</li>
+	<li><form>
+		<label>
+        <input type="checkbox" name="checkbox-1 ">Drink oral contrast at 9:00AM
+
+		</label>
+	</form></li>
+	<li><form>
+		<label>
+        <input type="checkbox" name="checkbox-0 ">Check in at 10:00AM
+		</label>
+	</form></li>
+	</ul>
+	
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!--<form>
+		<label>
+        <input type="checkbox" name="checkbox-1 ">Drink oral contrast 2 hours before appointment
+
+		</label>
+	</form>
+	
+	<form>
+		<label>
+        <input type="checkbox" name="checkbox-2 "> check in
+		</label>
+	</form>
+	
+			
+	
+		
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme = "b" data-position="fixed">
+		<div data-role="controlgroup" data-type="horizontal">
+		<a href="#Reminders" data-role="button">Reminders</a>
+		<a href="#Exams" data-role="button">Exams</a>
+		<a href="#Contact" data-role="button">Contact</a>
+		<a href="#More" data-role="button">More</a>
+	</div>
+	</div><!--footer -->
+	
+</div>
+</div><!-- /page -->
+
+
+<!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+<div data-role="page" id ="Exams">
+
+	<div data-role="header" data-theme = "b" >
+		<h1>Exam Prep</h1>
+		
+	</div><!-- /header -->
+	
+	<div data-role="content">
+
+		<h1>Exams</h1>
+		
+	<ul data-role="listview" data-filter="true" data-filter-placeholder="Search exams..." data-inset="true">
+		<li><a href="#">CT abdomen</a></li>
+		<li><a href="#">Ultrasound Abdomen</a></li>
+	</ul>
+		<!--<p>View internal page called <a href="#page2">bar</a></p>-->
+	</div><!-- /content -->
+	
+
+	
+	<div data-role="footer" data-theme = "b" data-position="fixed">
+		<div data-role="controlgroup" data-type="horizontal">
+		<a href="#Reminders" data-role="button">Reminders</a>
+		<a href="#Exams" data-role="button">Exams</a>
+		<a href="#Contact" data-role="button">Contact</a>
+		<a href="#More" data-role="button">More</a>
+	</div>
+</div>
+	
+
+</div><!-- /page -->
+
+
+
+
+
+
+
+
+<body onload="title()"></body>
+
+</body>
+</html>
+
+
+
+
+<!--<a href="#" data-role="button" data-icon="star">Star button</a>		
+		<form id="form1" method="post" action="checklist.php">
+<fieldset class="ui-corner-all" >
+
+<div class="ui-checkbox">
+<input id="checkbox-t0" class="custom" type="checkbox" name="checkbox-t0">
+
+<label for="checkbox-t0">
+<span class="ui-btn-inner ui-corner-top">
+<span class="ui-btn-text">no food or drinks, except water after midnight</span>
+</span>
+</label>
+</div>
+
+<div class="ui-checkbox">
+<input id="checkbox-t1b" class="custom" type="checkbox" name="checkbox-t1b">
+<label for="checkbox-t1b">
+<span class="ui-btn-inner">
+<span class="ui-btn-text">Drink oral contrast 2 hours before appointment</span>
+</span>
+</label>
+</div>
+
+<div class="ui-input-text">
+<label for="achternaam" data-theme="a">
+<span class="ui-btn-inner">
+<span class="textbox"> Last name: </span></span>
+</label>
+<input type="text" name="achternaam">
+</div>
+</fieldset>
+
+<fieldset>
+<div class="ui-block-a"><button type="submit" name="submit"  data-theme="a" >Send</button></div>
+</fieldset></form>
+		
+		
+		
+		
+		
+		
+		
+		
+	-->
